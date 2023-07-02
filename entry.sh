@@ -60,9 +60,11 @@ CONFIGTEST=$(rsnapshot configtest)
 echo "${CONFIGTEST}"
 if [ "${CONFIGTEST}" = "Syntax OK" ]
 then
-  # Syntax is OK, start cron
-  /usr/sbin/crond -f
   # And call the report script
   chmod +x /report.sh
-  /report.sh
+  echo "Container started, running report script" >> /var/log/rsnapshot
+  REPORT=$(/bin/sh /report.sh)
+  echo "Report script response: ${REPORT}"
+  # Syntax is OK, start cron
+  /usr/sbin/crond -f
 fi

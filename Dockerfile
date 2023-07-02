@@ -23,8 +23,9 @@ ENV CRON_YEARLY="0 22 1 1 *"
 
 RUN touch /ssh-id && touch /backup.cfg
 
-RUN apk add --update rsnapshot tzdata
+RUN apk add --update rsnapshot tzdata curl
 
 ADD entry.sh /entry.sh
+ADD report.sh /report.sh
 
 CMD ["/bin/sh", "/entry.sh"]

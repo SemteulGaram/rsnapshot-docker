@@ -18,25 +18,31 @@ if [ ! -f /var/log/rsnapshot ]; then
   exit 0
 fi
 
-urlencode() {
-    local data
-    if [[ $# != 1 ]]; then
-        echo "Usage: $0 string-to-urlencode"
-        return 1
-    fi
-    data="$(curl -s -o /dev/null -w %{url_effective} --get --data-urlencode "$1" "")"
-    if [[ $? != 3 ]]; then
-        echo "Unexpected error" 1>&2
-        return 2
-    fi
-    echo "${data##/?}"
-    return 0
+# replcae - to \-
+replacedash() {
+  echo "$1" | sed 's/-/\\-/g'
 }
 
-# urlencode REPORT_HEAD\n{last 100 lines of /var/log/rsnapshot}
-REPORT_TEXT=$(urlencode "${REPORT_HEAD}\n$(tail -n 100 /var/log/rsnapshot)")
+# ChatGPT go brrr for unicode encode for shell script
+urlencode() {
+  printf "%s" "$1" | while IFS= read -r -n1 -d '' char
+  do
+    case "$char" in
+      [a-zA-Z0-9.~_-]) printf "$char" ;;
+      *) printf "$char" | xxd -p -c1 | tr -d '\n' | sed 's/^/%/' ;;
+    esac
+  done
+  printf '\n'
+}
 
-url="https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${CHATROOM_ID}&text=${REPORT_TEXT}"
+# urlencode REPORT_HEAD\n{last 10 lines of /var/log/rsnapshot}
+REPORT_RAW="${REPORT_HEAD}
+\`\`\`
+$(tail -n 10 /var/log/rsnapshot)
+\`\`\`"
+REPORT_TEXT=$(urlencode "$(replacedash${REPORT_RAW})")
+
+url="https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage?parse_mode=MarkdownV2&chat_id=${CHATROOM_ID}&text=${REPORT_TEXT}"
 command="{ curl -s -m 10 \"${url}\" 2> /dev/null > /dev/null & } 2>/dev/null;disown &>/dev/null"
 
 # Send the report
