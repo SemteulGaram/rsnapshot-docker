@@ -93,6 +93,20 @@ The default value is `0 22 1 1 *`, i.e. at 22:00 (10pm) every first January.
 _This setting only is relevant if `BACKUP_YEARLY` is set to a non-zero
 value._
 
+**`RSYNC_NICE`**
+This specifies the nice value for rsync.
+The default value is `19`.
+_This setting only is relevant if `RSYNC_IONICE` is set to a non-zero
+value._
+Available values are `-20` (highest priority) to `19` (lowest priority). [https://linux.die.net/man/1/nice](https://linux.die.net/man/1/nice)
+
+**`RSYNC_IONICE`**
+This specifies the ionice value for rsync.
+The default value is `3`.
+_This setting only is relevant if `RSYNC_IONICE` is set to a non-zero
+value._
+Available values are `0` (None), `1` (Realtime), `2` (Best Effort), `3` (Idle). [https://linux.die.net/man/1/ionice](https://linux.die.net/man/1/ionice)
+
 **`TELEGRAM_BOT_TOKEN`**
 This specifies the Telegram bot token for report `/var/log/rsnapshot`.
 If not specifies, report will be disabled

@@ -20,6 +20,8 @@ ENV CRON_DAILY="30 23 * * *"
 ENV CRON_WEEKLY="0 23 * * 0"
 ENV CRON_MONTHLY="30 22 1 * *"
 ENV CRON_YEARLY="0 22 1 1 *"
+ENV RSYNC_NICE=19
+ENV RSYNC_IONICE=3
 
 RUN touch /ssh-id && touch /backup.cfg
 

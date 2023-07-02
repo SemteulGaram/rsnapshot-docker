@@ -29,27 +29,27 @@ EOF
 if [ "${BACKUP_HOURLY}" -gt 0 ]
 then
   echo "retain	hourly	${BACKUP_HOURLY}">> /etc/rsnapshot.conf
-  echo "${CRON_HOURLY} rsnapshot hourly ; /bin/sh /report.sh" >> /etc/crontabs/root
+  echo "${CRON_HOURLY} nice -n ${RSYNC_NICE} ionice -c ${RSYNC_IONICE} rsnapshot hourly ; /bin/sh /report.sh" >> /etc/crontabs/root
 fi
 if [ "${BACKUP_DAILY}" -gt 0 ]
 then
   echo "retain	daily	${BACKUP_DAILY}">> /etc/rsnapshot.conf
-  echo "${CRON_DAILY} rsnapshot daily ; /bin/sh /report.sh" >> /etc/crontabs/root
+  echo "${CRON_DAILY} nice -n ${RSYNC_NICE} ionice -c ${RSYNC_IONICE} rsnapshot daily ; /bin/sh /report.sh" >> /etc/crontabs/root
 fi
 if [ "${BACKUP_WEEKLY}" -gt 0 ]
 then
   echo "retain	weekly	${BACKUP_WEEKLY}">> /etc/rsnapshot.conf
-  echo "${CRON_WEEKLY} rsnapshot weekly ; /bin/sh /report.sh" >> /etc/crontabs/root
+  echo "${CRON_WEEKLY} nice -n ${RSYNC_NICE} ionice -c ${RSYNC_IONICE} rsnapshot weekly ; /bin/sh /report.sh" >> /etc/crontabs/root
 fi
 if [ "${BACKUP_MONTHLY}" -gt 0 ]
 then
   echo "retain	monthly	${BACKUP_MONTHLY}">> /etc/rsnapshot.conf
-  echo "${CRON_MONTHLY} rsnapshot monthly ; /bin/sh /report.sh" >> /etc/crontabs/root
+  echo "${CRON_MONTHLY} nice -n ${RSYNC_NICE} ionice -c ${RSYNC_IONICE} rsnapshot monthly ; /bin/sh /report.sh" >> /etc/crontabs/root
 fi
 if [ "${BACKUP_YEARLY}" -gt 0 ]
 then
   echo "retain	yearly	${BACKUP_YEARLY}">> /etc/rsnapshot.conf
-  echo "${CRON_YEARLY} rsnapshot yearly ; /bin/sh /report.sh" >> /etc/crontabs/root
+  echo "${CRON_YEARLY} nice -n ${RSYNC_NICE} ionice -c ${RSYNC_IONICE} rsnapshot yearly ; /bin/sh /report.sh" >> /etc/crontabs/root
 fi
 
 # Add the user-provided config file
