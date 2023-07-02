@@ -29,27 +29,27 @@ EOF
 if [ "${BACKUP_HOURLY}" -gt 0 ]
 then
   echo "retain	hourly	${BACKUP_HOURLY}">> /etc/rsnapshot.conf
-  echo "${CRON_HOURLY} rsnapshot hourly" >> /etc/crontabs/root
+  echo "${CRON_HOURLY} rsnapshot hourly ; /bin/sh /report.sh" >> /etc/crontabs/root
 fi
 if [ "${BACKUP_DAILY}" -gt 0 ]
 then
   echo "retain	daily	${BACKUP_DAILY}">> /etc/rsnapshot.conf
-  echo "${CRON_DAILY} rsnapshot daily" >> /etc/crontabs/root
+  echo "${CRON_DAILY} rsnapshot daily ; /bin/sh /report.sh" >> /etc/crontabs/root
 fi
 if [ "${BACKUP_WEEKLY}" -gt 0 ]
 then
   echo "retain	weekly	${BACKUP_WEEKLY}">> /etc/rsnapshot.conf
-  echo "${CRON_WEEKLY} rsnapshot weekly" >> /etc/crontabs/root
+  echo "${CRON_WEEKLY} rsnapshot weekly ; /bin/sh /report.sh" >> /etc/crontabs/root
 fi
 if [ "${BACKUP_MONTHLY}" -gt 0 ]
 then
   echo "retain	monthly	${BACKUP_MONTHLY}">> /etc/rsnapshot.conf
-  echo "${CRON_MONTHLY} rsnapshot monthly" >> /etc/crontabs/root
+  echo "${CRON_MONTHLY} rsnapshot monthly ; /bin/sh /report.sh" >> /etc/crontabs/root
 fi
 if [ "${BACKUP_YEARLY}" -gt 0 ]
 then
   echo "retain	yearly	${BACKUP_YEARLY}">> /etc/rsnapshot.conf
-  echo "${CRON_YEARLY} rsnapshot yearly" >> /etc/crontabs/root
+  echo "${CRON_YEARLY} rsnapshot yearly ; /bin/sh /report.sh" >> /etc/crontabs/root
 fi
 
 # Add the user-provided config file
@@ -63,5 +63,6 @@ then
   # Syntax is OK, start cron
   /usr/sbin/crond -f
   # And call the report script
+  chmod +x /report.sh
   /report.sh
 fi

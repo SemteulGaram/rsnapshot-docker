@@ -94,15 +94,15 @@ _This setting only is relevant if `BACKUP_YEARLY` is set to a non-zero
 value._
 
 **`TELEGRAM_BOT_TOKEN`**
-This specifies the Telegram bot token for report /var/log/rsnapshot
+This specifies the Telegram bot token for report `/var/log/rsnapshot`.
 If not specifies, report will be disabled
 
 **`CHATROOM_ID`**
-This specifies the Telegram chatroom id
+This specifies the Telegram chatroom id.
 If not specifies, report will be disabled
 
 **`REPORT_HEAD`**
-This specifies the header of report message
+This specifies the header of report message.
 If not specifies, report will be disabled
 
 Example
