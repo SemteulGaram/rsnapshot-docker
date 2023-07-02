@@ -93,6 +93,18 @@ The default value is `0 22 1 1 *`, i.e. at 22:00 (10pm) every first January.
 _This setting only is relevant if `BACKUP_YEARLY` is set to a non-zero
 value._
 
+**`TELEGRAM_BOT_TOKEN`**
+This specifies the Telegram bot token for report /var/log/rsnapshot
+If not specifies, report will be disabled
+
+**`CHATROOM_ID`**
+This specifies the Telegram chatroom id
+If not specifies, report will be disabled
+
+**`REPORT_HEAD`**
+This specifies the header of report message
+If not specifies, report will be disabled
+
 Example
 -------
 
@@ -120,4 +132,11 @@ backup		/home	home-folder/
 ```
 docker run -d -v backup.cfg:/backup.cfg -v /srv/backup:/backup \
            -e BACKUP_NAME=root -e BACKUP_SOURCE=/ helmuthb/rsnapshot
+```
+
+How to build
+---
+Clone this repository and
+```bash
+sudo docker build . -t semteul/rsnapshot:1.0.0
 ```

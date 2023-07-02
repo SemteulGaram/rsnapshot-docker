@@ -1,6 +1,8 @@
 FROM alpine
 
-MAINTAINER Helmuth Breitenfellner <helmuth@breitenfellner.at>
+MAINTAINER SemteulGaram <scgtdy7151@gmail.com>
+# Originally from
+# MAINTAINER Helmuth Breitenfellner <helmuth@breitenfellner.at>
 
 VOLUME /backup
 VOLUME /data
