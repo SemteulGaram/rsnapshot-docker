@@ -18,9 +18,9 @@ if [ ! -f /var/log/rsnapshot ]; then
   exit 0
 fi
 
-# replcae - to \-
-replacedash() {
-  printf "%s\n" "$1" | sed 's/-/\\-/g'
+# replcae - < > . , to \- \< \> \. \,
+replacereserved() {
+  printf "%s\n" "$1" | sed -e 's/-/\\-/g' -e 's/</\\</g' -e 's/>/\\>/g' -e 's/\./\\./g' -e 's/,/\\,/g'
 }
 
 # ChatGPT go brrr for unicode encode for shell script
@@ -40,7 +40,7 @@ REPORT_RAW="${REPORT_HEAD}
 \`\`\`
 $(tail -n 10 /var/log/rsnapshot)
 \`\`\`"
-REPORT_TEXT=$(urlencode "$(replacedash "${REPORT_RAW}")")
+REPORT_TEXT=$(urlencode "$(replacereserved "${REPORT_RAW}")")
 
 url="https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage?parse_mode=MarkdownV2&chat_id=${CHATROOM_ID}&text=${REPORT_TEXT}"
 command="{ curl -s -m 10 \"${url}\" 2> /dev/null > /dev/null & } 2>/dev/null;disown &>/dev/null"
